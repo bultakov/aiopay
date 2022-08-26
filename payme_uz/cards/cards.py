@@ -24,10 +24,28 @@ class PaymeSubscribeCard:
         self._session = ClientSession(loop=self.loop)
 
     async def __requests(self, card_data: dict) -> dict:
+        """
+        Ma'lumotlarni yuborish uchun funksiya.
+
+        :param card_data: Karta maʼlumotlari oʻz ichiga oladi.
+        :return JSON:
+        """
         async with self._session.post(url=self.__api_url, json=card_data, headers=self.__headers) as response:
             return await response.json()
 
     async def card_create(self, number: str, expire: str, save: bool) -> dict:
+        """
+        Yangi karta tokenini yaratish uchun funksiya.
+
+        :param number: Karta raqami.
+        :param expire: Amal qilish muddati.
+        :param save: Agar True bo'lsa, token keyingi to'lovlar uchun ishlatilishi mumkin;
+        agar False bo'lsa, token faqat bir marta ishlatilishi mumkin. To'lovdan so'ng bir martalik token o'chiriladi.
+        :return: JSON
+
+        To'liq hujjat:
+        https://developer.help.paycom.uz/uz/metody-subscribe-api/cards.create
+        """
         data: dict = {
             "method": "cards.create",
             "params": {
@@ -41,6 +59,15 @@ class PaymeSubscribeCard:
         return await self.__requests(card_data=data)
 
     async def card_get_verify_code(self, token: str) -> dict:
+        """
+        Tasdiqlash kodini olish uchun funksiya.
+
+        :param token: Karta tokeni.
+        :return: JSON
+
+        To'liq hujjat:
+        https://developer.help.paycom.uz/uz/metody-subscribe-api/cards.get_verify_code
+        """
         data: dict = {
             "method": "cards.get_verify_code",
             "params": {
@@ -50,6 +77,16 @@ class PaymeSubscribeCard:
         return await self.__requests(card_data=data)
 
     async def card_verify(self, verify_code: int, token: str) -> dict:
+        """
+        SMS orqali yuborilgan kod yordamida kartani tekshirish.
+
+        :param verify_code: Tekshirish uchun kod.
+        :param token: Karta tokeni.
+        :return: JSON
+
+        To'liq hujjat:
+        https://developer.help.paycom.uz/uz/metody-subscribe-api/cards.verify
+        """
         data: dict = {
             "method": "cards.verify",
             "params": {
@@ -60,6 +97,15 @@ class PaymeSubscribeCard:
         return await self.__requests(card_data=data)
 
     async def card_check(self, token: str) -> dict:
+        """
+        Karta tokeni faol yoki faol emasligini tekshirish.
+
+        :param token: Karta tokeni.
+        :return: JSON
+
+        To'liq hujjat:
+        https://developer.help.paycom.uz/uz/metody-subscribe-api/cards.check
+        """
         data: dict = {
             "method": "cards.check",
             "params": {
@@ -69,6 +115,15 @@ class PaymeSubscribeCard:
         return await self.__requests(card_data=data)
 
     async def card_remove(self, token: str) -> dict:
+        """
+        Karta tokenini o'chirish.
+
+        :param token: O'chiriladigan karta tokeni.
+        :return: JSON
+
+        To'liq hujjat:
+        https://developer.help.paycom.uz/uz/metody-subscribe-api/cards.remove
+        """
         data: dict = {
             "method": "cards.remove",
             "params": {
