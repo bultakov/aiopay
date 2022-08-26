@@ -45,7 +45,7 @@ if __name__ == '__main__':
     "card": {
       "number": "860006******6311",
       "expire": "03/99",
-      "token": "6308...5xUj",
+      "token": "6308******5xUj",
       "recurrent": true,
       "verify": false,
       "type": "22618"
