@@ -25,7 +25,7 @@ async def main():
         paycom_id='paycom_id',
         debug=True
     )  # debug: True - sinov rejimi, False - ishlab chiqarish rejimi
-    data = await card_api.card_create(number='8600069195406311', expire='0399', save=True)
+    data = await card_api.card_create(number='860006******6311', expire='0399', save=True)
     print(data)
     await card_api.close()
 
