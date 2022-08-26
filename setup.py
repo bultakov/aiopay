@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='aiopay',
-    version='1.0.0',
+    version='1.0.1',
     url='https://github.com/bultakov/aiopay',
     license='MIT',
     author='Ibrohim Bultakov',
