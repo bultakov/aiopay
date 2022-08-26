@@ -1,4 +1,4 @@
-from receipts import PaymeSubscribeReceipt
+from .receipts import PaymeSubscribeReceipt
 
 __all__ = [
     'PaymeSubscribeReceipt'

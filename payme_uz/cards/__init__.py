@@ -1,4 +1,4 @@
-from cards import PaymeSubscribeCard
+from .cards import PaymeSubscribeCard
 
 __all__ = [
     'PaymeSubscribeCard'

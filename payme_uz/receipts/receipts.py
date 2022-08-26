@@ -1,11 +1,20 @@
+from asyncio import AbstractEventLoop, get_event_loop
+
 from aiohttp import ClientSession
 
 
 class PaymeSubscribeReceipt:
-    def __init__(self, paycom_id: str, secret_key: str, debug: bool = False):
+    def __init__(self, paycom_id: str, secret_key: str, debug: bool = False, loop: AbstractEventLoop = None):
+        # Asyncio loop instance
+        if loop is None:
+            loop = get_event_loop()
+        self.loop = loop
+
+        # URL's
         self.test_url: str = 'https://checkout.test.paycom.uz/api/'
         self.pro_url: str = 'https://checkout.paycom.uz/api/'
         self.__api_url: str = self.pro_url if debug else self.test_url
+
         self.__paycom_id: str = paycom_id
         self.__secret_key: str = secret_key
 
@@ -13,10 +22,11 @@ class PaymeSubscribeReceipt:
             "X-Auth": f"{self.__paycom_id}:{self.__secret_key}",
         }
 
-    async def __requests(self, card_info: dict) -> dict:
-        async with ClientSession() as session:
-            async with session.post(url=self.__api_url, json=card_info, headers=self.__headers) as response:
-                return await response.json()
+        self._session = ClientSession(loop=self.loop)
+
+    async def __requests(self, card_data: dict) -> dict:
+        async with self._session.post(url=self.__api_url, json=card_data, headers=self.__headers) as response:
+            return await response.json()
 
     async def receipt_create(self, amount: float, order_id: int) -> dict:
         data: dict = {
@@ -28,7 +38,7 @@ class PaymeSubscribeReceipt:
                 }
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def receipt_create_p2p(self, token: str, amount: float, p2p_description: str = 'description') -> dict:
         data: dict = {
@@ -39,7 +49,7 @@ class PaymeSubscribeReceipt:
                 "description": p2p_description
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def receipt_pay(self, invoice_id: str, token: str, phone: str) -> dict:
         data: dict = {
@@ -52,7 +62,7 @@ class PaymeSubscribeReceipt:
                 }
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def receipt_send(self, invoice_id: str, phone: str) -> dict:
         data: dict = {
@@ -62,7 +72,7 @@ class PaymeSubscribeReceipt:
                 "phone": phone
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def receipt_cancel(self, invoice_id: str) -> dict:
         data: dict = {
@@ -71,7 +81,7 @@ class PaymeSubscribeReceipt:
                 "id": invoice_id
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def receipt_check(self, invoice_id: str) -> dict:
         data: dict = {
@@ -80,7 +90,7 @@ class PaymeSubscribeReceipt:
                 "id": invoice_id
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def reciept_get(self, invoice_id: str) -> dict:
         data: dict = {
@@ -89,7 +99,7 @@ class PaymeSubscribeReceipt:
                 "id": invoice_id
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
 
     async def reciept_get_all(self, count: int, _from: str, to: str, offset: str) -> dict:
         data: dict = {
@@ -101,4 +111,7 @@ class PaymeSubscribeReceipt:
                 "offset": offset
             }
         }
-        return await self.__requests(data)
+        return await self.__requests(card_data=data)
+
+    async def close(self):
+        await self._session.close()
