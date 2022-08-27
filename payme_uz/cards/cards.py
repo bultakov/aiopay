@@ -33,7 +33,7 @@ class PaymeSubscribeCard:
         async with self._session.post(url=self.__api_url, json=card_data, headers=self.__headers) as response:
             return await response.json()
 
-    async def card_create(self, number: str, expire: str, save: bool) -> dict:
+    async def create(self, number: str, expire: str, save: bool) -> dict:
         """
         Yangi karta tokenini yaratish uchun funksiya.
 
@@ -58,7 +58,7 @@ class PaymeSubscribeCard:
         }
         return await self.__requests(card_data=data)
 
-    async def card_get_verify_code(self, token: str) -> dict:
+    async def get_verify_code(self, token: str) -> dict:
         """
         Tasdiqlash kodini olish uchun funksiya.
 
@@ -76,7 +76,7 @@ class PaymeSubscribeCard:
         }
         return await self.__requests(card_data=data)
 
-    async def card_verify(self, verify_code: int, token: str) -> dict:
+    async def verify(self, verify_code: int, token: str) -> dict:
         """
         SMS orqali yuborilgan kod yordamida kartani tekshirish.
 
@@ -96,7 +96,7 @@ class PaymeSubscribeCard:
         }
         return await self.__requests(card_data=data)
 
-    async def card_check(self, token: str) -> dict:
+    async def check(self, token: str) -> dict:
         """
         Karta tokeni faol yoki faol emasligini tekshirish.
 
@@ -114,7 +114,7 @@ class PaymeSubscribeCard:
         }
         return await self.__requests(card_data=data)
 
-    async def card_remove(self, token: str) -> dict:
+    async def remove(self, token: str) -> dict:
         """
         Karta tokenini o'chirish.
 

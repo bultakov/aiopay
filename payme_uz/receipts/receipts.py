@@ -34,7 +34,7 @@ class PaymeSubscribeReceipt:
         async with self._session.post(url=self.__api_url, json=card_data, headers=self.__headers) as response:
             return await response.json()
 
-    async def receipt_create(self, amount: float, order_id: int) -> dict:
+    async def create(self, amount: float, order_id: int) -> dict:
         """
         Yangi to'lov kvitansiyasini yaratish uchun funksiya.
 
@@ -56,7 +56,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_create_p2p(self, token: str, amount: float, description: str = 'description') -> dict:
+    async def create_p2p(self, token: str, amount: float, description: str = 'description') -> dict:
         """
         Yangi P2P tranzaksiyasini yaratish uchun funksiya.
         U sinov rejimida emas, faqat ishlab chiqarish rejimida ishlaydi.
@@ -76,7 +76,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_pay(self, invoice_id: str, token: str, phone: str) -> dict:
+    async def pay(self, invoice_id: str, token: str, phone: str) -> dict:
         """
         Mavjud chekni to'lash uchun funksiya.
 
@@ -100,7 +100,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_send(self, invoice_id: str, phone: str) -> dict:
+    async def send(self, invoice_id: str, phone: str) -> dict:
         """
         SMS xabarda to'lov kvitansiyasini yuborish uchun funksiya.
 
@@ -120,7 +120,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_cancel(self, invoice_id: str) -> dict:
+    async def cancel(self, invoice_id: str) -> dict:
         """
         Navbatda turgan pullik chekni bekor qilish uchun funksiya.
 
@@ -138,7 +138,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_check(self, invoice_id: str) -> dict:
+    async def check(self, invoice_id: str) -> dict:
         """
         Chek mavjudligini tekshirish uchun funksiya.
 
@@ -156,7 +156,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def receipt_get(self, invoice_id: str) -> dict:
+    async def get(self, invoice_id: str) -> dict:
         """
         Mavjud chek holatini tekshirish uchun funksiya.
 
@@ -174,7 +174,7 @@ class PaymeSubscribeReceipt:
         }
         return await self.__requests(card_data=data)
 
-    async def reciept_get_all(self, count: int, _from: str, to: str, offset: str) -> dict:
+    async def get_all(self, count: int, _from: str, to: str, offset: str) -> dict:
         """
         Barcha to'liq ma'lumotlarni oling,
         ma'lum bir davr uchun cheklar bo'yicha.
