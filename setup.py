@@ -1,11 +1,13 @@
 from setuptools import setup
 
+from payme_uz import __version__
+
 with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
     name='aiopay',
-    version='1.0.3',
+    version=__version__,
     url='https://github.com/bultakov/aiopay',
     license='MIT',
     author='Ibrohim Bultakov',
