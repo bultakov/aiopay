@@ -14,7 +14,7 @@ $ pip install -U aiopay
 
 * Example:
 
-```python
+```python3
 from asyncio import get_event_loop
 
 from payme_uz.cards import PaymeSubscribeCard
